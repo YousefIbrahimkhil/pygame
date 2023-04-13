@@ -1,8 +1,3 @@
-# Example file showing a circle moving on screen
-# To install run the following commands:
-# python3 -m pip install --upgrade pip
-# python3 -m pip install --upgrade Pillow
-
 import pygame
 from PIL import Image
 
@@ -14,6 +9,7 @@ dt = 0
 speed = 10
 size = 50
 direction = "down"
+level = []
 
 def rectangle(start_x, start_y, size):
     x = start_x-(size/2)
@@ -21,7 +17,6 @@ def rectangle(start_x, start_y, size):
     return pygame.Rect(x, y, size, size)
 
 rect_pos = rectangle(screen.get_width() / 2, (screen.get_height() / 2) + 100, 100)
-
 player_pos = rectangle(screen.get_width() / 2, screen.get_height() / 2, 20)
 
 with Image.open("level-0.png") as im:
@@ -29,19 +24,16 @@ with Image.open("level-0.png") as im:
     pixels = list(im.getdata())
     
 
-
 while running:
-    # poll for events
-    # pygame.QUIT event means the user clicked X to close your window
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
 
-    # fill the screen with a color to wipe away anything from last frame
     screen.fill("black")
 
     count = 0
     row = 0
+    level = []
 
     for x in pixels:
         wallcolor = "white"
@@ -49,17 +41,30 @@ while running:
             wallcolor = "white"
         else:
             wallcolor = "black"
-        pygame.draw.rect(screen, wallcolor, rectangle(count * size, row * size, size))
+        level_rect = rectangle(count * size, row * size, size)
+        level.append(level_rect)
+        pygame.draw.rect(screen, wallcolor, level_rect)
         count += 1
         if count > width - 1:
             count = 0
             row += 1
+
+    collide = False
+
+    for index, i in enumerate(level):
+        this_collide = i.colliderect(player_pos)
+        # print(index)
+        if this_collide and pixels[index] == (0,0,0,255):
+            collide = True
+            # print(this_collide)
             
-    # point = pygame.player_pos.get_pos()
-    collide = rect_pos.colliderect(player_pos)
+    # collide = False
+
+    # collide = rect_pos.colliderect(player_pos)
     color = (255, 0, 0) if collide else (255, 255, 255)
     pygame.draw.rect(screen, color, player_pos)
-    pygame.draw.rect(screen, "green", rect_pos)
+
+    # pygame.draw.rect(screen, "green", rect_pos)
 
     keys = pygame.key.get_pressed()
     if keys[pygame.K_w]:
