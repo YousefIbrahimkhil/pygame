@@ -12,6 +12,7 @@ clock = pygame.time.Clock()
 running = True
 dt = 0
 speed = 10
+size = 50
 direction = "down"
 
 def rectangle(start_x, start_y, size):
@@ -27,9 +28,7 @@ with Image.open("level-0.png") as im:
     (width, height) = (im.width, im.height)
     pixels = list(im.getdata())
     
-print(width)
-print(height)
-print(pixels)
+
 
 while running:
     # poll for events
@@ -41,11 +40,27 @@ while running:
     # fill the screen with a color to wipe away anything from last frame
     screen.fill("black")
 
+    count = 0
+    row = 0
+
+    for x in pixels:
+        wallcolor = "white"
+        if x == (0,0,0,255):
+            wallcolor = "white"
+        else:
+            wallcolor = "black"
+        pygame.draw.rect(screen, wallcolor, rectangle(count * size, row * size, size))
+        count += 1
+        if count > width - 1:
+            count = 0
+            row += 1
+            
     # point = pygame.player_pos.get_pos()
     collide = rect_pos.colliderect(player_pos)
     color = (255, 0, 0) if collide else (255, 255, 255)
     pygame.draw.rect(screen, color, player_pos)
     pygame.draw.rect(screen, "green", rect_pos)
+
     keys = pygame.key.get_pressed()
     if keys[pygame.K_w]:
         direction = "up"
