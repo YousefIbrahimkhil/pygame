@@ -54,6 +54,9 @@ while running:
         this_collide = i.colliderect(player_pos)
         if this_collide and pixels[index] == (0,0,0,255):
             collide = True
+        elif this_collide and pixels[index] == (237,28,36,255):
+            print('YOU WON!')
+            running = False
             
     color = (255, 0, 0) if collide else (255, 255, 255)
     pygame.draw.rect(screen, color, player_pos)
