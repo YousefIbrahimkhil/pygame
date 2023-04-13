@@ -8,7 +8,7 @@ running = True
 dt = 0
 speed = 10
 size = 50
-direction = "down"
+direction = "right"
 level = []
 
 def rectangle(start_x, start_y, size):
@@ -34,6 +34,7 @@ while running:
     count = 0
     row = 0
     level = []
+    collide = False
 
     for x in pixels:
         wallcolor = "white"
@@ -49,22 +50,13 @@ while running:
             count = 0
             row += 1
 
-    collide = False
-
     for index, i in enumerate(level):
         this_collide = i.colliderect(player_pos)
-        # print(index)
         if this_collide and pixels[index] == (0,0,0,255):
             collide = True
-            # print(this_collide)
             
-    # collide = False
-
-    # collide = rect_pos.colliderect(player_pos)
     color = (255, 0, 0) if collide else (255, 255, 255)
     pygame.draw.rect(screen, color, player_pos)
-
-    # pygame.draw.rect(screen, "green", rect_pos)
 
     keys = pygame.key.get_pressed()
     if keys[pygame.K_w] or keys[pygame.K_UP]:
@@ -92,13 +84,7 @@ while running:
         speed = 10
 
 
-
-    # flip() the display to put your work on screen
     pygame.display.flip()
-
-    # limits FPS to 60
-    # dt is delta time in seconds since last frame, used for framerate-
-    # independent physics.
     dt = clock.tick(60) / 1000
 
 pygame.quit()
