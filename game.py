@@ -1,5 +1,10 @@
 # Example file showing a circle moving on screen
+# To install run the following commands:
+# python3 -m pip install --upgrade pip
+# python3 -m pip install --upgrade Pillow
+
 import pygame
+from PIL import Image
 
 pygame.init()
 screen = pygame.display.set_mode((1280, 720))
@@ -10,6 +15,14 @@ speed = 10
 direction = "down"
 
 player_pos = pygame.Vector2(screen.get_width() / 2, screen.get_height() / 2)
+
+with Image.open("level-0.png") as im:
+    (width, height) = (im.width, im.height)
+    pixels = list(im.getdata())
+    
+print(width)
+print(height)
+print(pixels)
 
 while running:
     # poll for events
