@@ -67,18 +67,21 @@ while running:
         this_collide = i.colliderect(player_pos)
         if this_collide and pixels[index] == (0,0,0,255):
             collide = True
+        elif this_collide and pixels[index] == (237,28,36,255):
+            print('YOU WON!')
+            running = False
             
     color = (255, 0, 0) if collide else (255, 255, 255)
     pygame.draw.rect(screen, color, player_pos)
 
     keys = pygame.key.get_pressed()
-    if keys[pygame.K_w]:
+    if keys[pygame.K_w] or keys[pygame.K_UP]:
         direction = "up"
-    if keys[pygame.K_s]:
+    if keys[pygame.K_s] or keys[pygame.K_DOWN]:
         direction = "down"
-    if keys[pygame.K_a]:
+    if keys[pygame.K_a] or keys[pygame.K_LEFT]:
         direction = "left"
-    if keys[pygame.K_d]:
+    if keys[pygame.K_d] or keys[pygame.K_RIGHT]:
         direction = "right"
 
     if direction == "down":
