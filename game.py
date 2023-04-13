@@ -21,7 +21,7 @@ def rectangle(start_x, start_y, size):
 
 rect_pos = rectangle(screen.get_width() / 2, (screen.get_height() / 2) + 100, 100)
 
-player_pos = pygame.Vector2(screen.get_width() / 2, screen.get_height() / 2)
+player_pos = rectangle(screen.get_width() / 2, screen.get_height() / 2, 20)
 
 with Image.open("level-0.png") as im:
     (width, height) = (im.width, im.height)
@@ -41,7 +41,10 @@ while running:
     # fill the screen with a color to wipe away anything from last frame
     screen.fill("black")
 
-    pygame.draw.circle(screen, "blue", player_pos, 10)
+    # point = pygame.player_pos.get_pos()
+    collide = rect_pos.colliderect(player_pos)
+    color = (255, 0, 0) if collide else (255, 255, 255)
+    pygame.draw.rect(screen, color, player_pos)
     pygame.draw.rect(screen, "green", rect_pos)
     keys = pygame.key.get_pressed()
     if keys[pygame.K_w]:
