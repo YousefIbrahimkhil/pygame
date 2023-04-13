@@ -10,19 +10,32 @@ speed = 10
 size = 50
 direction = "right"
 level = []
+count = 0
+row = 0
+starting_x = 0
+starting_y = 0
 
 def rectangle(start_x, start_y, size):
     x = start_x-(size/2)
     y = start_y-(size/2)
     return pygame.Rect(x, y, size, size)
 
-rect_pos = rectangle(screen.get_width() / 2, (screen.get_height() / 2) + 100, 100)
-player_pos = rectangle(screen.get_width() / 2, screen.get_height() / 2, 20)
-
 with Image.open("level-0.png") as im:
     (width, height) = (im.width, im.height)
     pixels = list(im.getdata())
     
+for x in pixels:
+    if x == (168, 230, 29, 255):
+        starting_x = count * size
+        starting_y = row * size
+    count += 1
+    if count > width - 1:
+        count = 0
+        row += 1
+
+print(starting_x)
+print(starting_y)
+player_pos = rectangle(starting_x, starting_y, size)
 
 while running:
     for event in pygame.event.get():
@@ -80,8 +93,9 @@ while running:
     speed += 1
 
     if collide:
-        player_pos = rectangle(screen.get_width() / 2, screen.get_height() / 2, 20)
+        player_pos = rectangle(starting_x, starting_y, size)
         speed = 10
+        direction = "right"
 
 
     pygame.display.flip()
