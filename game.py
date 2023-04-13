@@ -14,6 +14,13 @@ count = 0
 row = 0
 starting_x = 0
 starting_y = 0
+font = pygame.font.SysFont('Consolas', 30)
+counter = 0
+text = ""
+seconds = 0
+minutes = 0
+
+pygame.time.set_timer(pygame.USEREVENT, 1)
 
 def rectangle(start_x, start_y, size):
     x = start_x-(size/2)
@@ -41,8 +48,22 @@ while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
+        if event.type == pygame.USEREVENT:
+            counter += 1
+            milliseconds = 60 * (counter / 1000)
+            if counter > 1000:
+                seconds += 1
+                counter = 0
+                milliseconds = 0
+            if seconds > 59:
+                minutes += 1
+                seconds = 0
+            text = str(minutes).zfill(2) + ":" + str(seconds).zfill(2) + ":" + str(int(milliseconds)).zfill(2)
 
+            
+    
     screen.fill("black")
+    screen.blit(font.render(text, True, (255, 255, 255)), (screen.get_width()-150, 48))
 
     count = 0
     row = 0
@@ -71,7 +92,7 @@ while running:
             print('YOU WON!')
             running = False
             
-    color = (255, 0, 0) if collide else (255, 255, 255)
+    color = (255, 0, 0) if collide else (213, 227, 16)
     pygame.draw.rect(screen, color, player_pos)
 
     keys = pygame.key.get_pressed()
