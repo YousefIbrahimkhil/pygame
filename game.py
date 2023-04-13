@@ -9,6 +9,13 @@ dt = 0
 speed = 10
 direction = "down"
 
+def rectangle(start_x, start_y, size):
+    x = start_x-(size/2)
+    y = start_y-(size/2)
+    return pygame.Rect(x, y, size, size)
+
+rect_pos = rectangle(screen.get_width() / 2, (screen.get_height() / 2) + 100, 100)
+
 player_pos = pygame.Vector2(screen.get_width() / 2, screen.get_height() / 2)
 
 while running:
@@ -22,7 +29,7 @@ while running:
     screen.fill("black")
 
     pygame.draw.circle(screen, "blue", player_pos, 10)
-
+    pygame.draw.rect(screen, "green", rect_pos)
     keys = pygame.key.get_pressed()
     if keys[pygame.K_w]:
         direction = "up"
