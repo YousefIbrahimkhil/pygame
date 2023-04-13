@@ -67,6 +67,11 @@ while running:
 
     speed += 1
 
+    if collide:
+        player_pos = rectangle(screen.get_width() / 2, screen.get_height() / 2, 20)
+        speed = 10
+
+
 
     # flip() the display to put your work on screen
     pygame.display.flip()
