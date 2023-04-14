@@ -21,7 +21,12 @@ text = ""
 seconds = 0
 minutes = 0
 
+
+
 pygame.time.set_timer(pygame.USEREVENT, 1)
+
+
+
 
 def rectangle(start_x, start_y, size):
     x = start_x-(size/2)
@@ -31,6 +36,13 @@ def rectangle(start_x, start_y, size):
 with Image.open("level-0.png") as im:
     (width, height) = (im.width, im.height)
     pixels = list(im.getdata())
+
+
+def camera_movement(x, CameraX, y, CameraY):
+    screen.blit(pixels,(0 -CameraX,0 -CameraY))
+    screen.blit(player_pos,(x -CameraX,y -CameraY))
+    return pygame.display.flip()
+
     
 for x in pixels:
     if x == (168, 230, 29, 255):
@@ -122,8 +134,8 @@ while running:
             speed = 10
             direction = "right"
 
-
-        pygame.display.flip()
-        dt = clock.tick(60) / 1000
+    
+    pygame.display.flip()
+    dt = clock.tick(60) / 1000
 
 pygame.quit()
