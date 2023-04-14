@@ -41,9 +41,9 @@ for x in pixels:
         count = 0
         row += 1
 
-print(starting_x)
-print(starting_y)
-player_pos = rectangle(starting_x, starting_y, size)
+player_pos = rectangle(starting_x + (size / 2), starting_y + (size / 2), size)
+
+surface = pygame.Surface((width * size, height * size))
 
 while running:
     for event in pygame.event.get():
@@ -64,6 +64,7 @@ while running:
     if paused == False:
     
         screen.fill("black")
+        surface.fill((0,255,0))
         screen.blit(font.render(text, True, (255, 255, 255)), (screen.get_width()-150, 48))
 
         count = 0
@@ -77,9 +78,9 @@ while running:
                 wallcolor = "white"
             else:
                 wallcolor = "black"
-            level_rect = rectangle(count * size, row * size, size)
+            level_rect = rectangle(count * size + (size / 2), row * size + (size / 2), size)
             level.append(level_rect)
-            pygame.draw.rect(screen, wallcolor, level_rect)
+            pygame.draw.rect(surface, wallcolor, level_rect)
             count += 1
             if count > width - 1:
                 count = 0
@@ -94,7 +95,7 @@ while running:
                 paused = True
                 
         color = (255, 0, 0) if collide else (213, 227, 16)
-        pygame.draw.rect(screen, color, player_pos)
+        pygame.draw.rect(surface, color, player_pos)
 
         keys = pygame.key.get_pressed()
         if keys[pygame.K_w] or keys[pygame.K_UP]:
@@ -118,11 +119,11 @@ while running:
         speed += 1
 
         if collide:
-            player_pos = rectangle(starting_x, starting_y, size)
+            player_pos = rectangle(starting_x + (size / 2), starting_y + (size / 2), size)
             speed = 10
             direction = "right"
 
-
+        screen.blit(surface, ((screen.get_width() / 2) - player_pos.x, (screen.get_height() / 2) - player_pos.y))
         pygame.display.flip()
         dt = clock.tick(60) / 1000
 
