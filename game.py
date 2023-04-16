@@ -1,4 +1,5 @@
 import pygame
+from pygame import mixer
 from PIL import Image
 
 pygame.init()
@@ -15,13 +16,29 @@ count = 0
 row = 0
 starting_x = 0
 starting_y = 0
-font = pygame.font.SysFont('Consolas', 30)
+font = pygame.font.SysFont('Consolas', 20)
 counter = 0
 text = ""
 seconds = 0
 minutes = 0
 
+#Textures
+wallTexture = pygame.image.load('wall.png')
+floorTexture = pygame.image.load('floor.png')
+playerTexture = pygame.image.load('player.png')
+checkpointTexture = pygame.image.load('checkpoint.png')
+
 pygame.time.set_timer(pygame.USEREVENT, 1)
+
+
+mixer.init()
+mixer.music.load("music-0.mp3")
+mixer.music.set_volume(0.7)
+mixer.music.play()
+
+sound_effect = pygame.mixer.Sound('pop.ogg')
+
+
 
 def rectangle(start_x, start_y, size):
     x = start_x-(size/2)
@@ -63,9 +80,9 @@ while running:
 
     if paused == False:
     
-        screen.fill("black")
-        surface.fill((0,255,0))
-        screen.blit(font.render(text, True, (255, 255, 255)), (screen.get_width()-150, 48))
+        screen.fill((3,26,34))
+        surface.fill((3,26,34))
+        screen.blit(font.render(text, True, (255, 255, 255)), (screen.get_width()-140, 30))
 
         count = 0
         row = 0
@@ -75,12 +92,20 @@ while running:
         for x in pixels:
             wallcolor = "white"
             if x == (0,0,0,255):
-                wallcolor = "white"
+                level_rect = rectangle(count * size + (size / 2), row * size + (size / 2), size)
+                level.append(level_rect)
+                pygame.draw.rect(surface, (255,255,255,0), level_rect)
+                surface.blit(wallTexture, (count * size, row * size))
+            elif x == (237, 28, 36, 255):
+                level_rect = rectangle(count * size + (size / 2), row * size + (size / 2), size)
+                level.append(level_rect)
+                pygame.draw.rect(surface, (0,0,0,0), level_rect)
+                surface.blit(checkpointTexture, (count * size, row * size))
             else:
-                wallcolor = "black"
-            level_rect = rectangle(count * size + (size / 2), row * size + (size / 2), size)
-            level.append(level_rect)
-            pygame.draw.rect(surface, wallcolor, level_rect)
+                level_rect = rectangle(count * size + (size / 2), row * size + (size / 2), size)
+                level.append(level_rect)
+                pygame.draw.rect(surface, (0,0,0,0), level_rect)
+                surface.blit(floorTexture, (count * size, row * size))
             count += 1
             if count > width - 1:
                 count = 0
@@ -89,13 +114,13 @@ while running:
         for index, i in enumerate(level):
             this_collide = i.colliderect(player_pos)
             if this_collide and pixels[index] == (0,0,0,255):
+                sound_effect.play()
                 collide = True
             elif this_collide and pixels[index] == (237,28,36,255):
                 print('YOU WON!')
                 paused = True
                 
-        color = (255, 0, 0) if collide else (213, 227, 16)
-        pygame.draw.rect(surface, color, player_pos)
+        player = pygame.draw.rect(surface, (49, 86, 57, 0), player_pos)
 
         keys = pygame.key.get_pressed()
         if keys[pygame.K_w] or keys[pygame.K_UP]:
@@ -117,6 +142,7 @@ while running:
             player_pos.x += speed * dt
 
         speed += 1
+        surface.blit(playerTexture, player_pos)
 
         if collide:
             player_pos = rectangle(starting_x + (size / 2), starting_y + (size / 2), size)
