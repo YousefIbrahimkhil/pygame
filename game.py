@@ -27,7 +27,7 @@ width = 0
 height = 0
 win = False
 current_level = 0
-max_level = 1
+max_level = 2
 finished = False
 
 # FONTS
@@ -169,7 +169,7 @@ while running:
 
         screen.blit(font_min.render("TIMER", True, (202, 220, 159)), (screen.get_width()-70, 20))
         screen.blit(font_min.render("LEVEL", True, (202, 220, 159)), (20, 20))
-        screen.blit(font_large.render(str(current_level), True, (202, 220, 159)), (20, 40))
+        screen.blit(font_large.render(str(current_level + 1), True, (202, 220, 159)), (20, 40))
         screen.blit(font_large.render(text, True, (202, 220, 159)), (screen.get_width()-121, 40))
 
         count = 0
@@ -278,9 +278,10 @@ while running:
         if keys[pygame.K_p]:
             reset_game()
         screen.fill((3,26,34))
-        screen.blit(font_extralarge.render("SQUARES NIGHTMARE", True, (202, 220, 159)), ((screen.get_width() / 2) - 200, screen.get_height() / 2))
-        screen.blit(playerTexture, ((screen.get_width() / 2) - 25, (screen.get_height() / 2) - 100))
-        screen.blit(menuTexture, ((screen.get_width() / 2) - 200, (screen.get_height() / 2) + 100))
+        screen.blit(font_extralarge.render("SQUARES NIGHTMARE", True, (202, 220, 159)), ((screen.get_width() / 2) - 200, (screen.get_height() / 2)))
+        screen.blit(playerTexture, ((screen.get_width() / 2) - 25, (screen.get_height() / 2) - 150))
+        screen.blit(menuTexture, ((screen.get_width() / 2) - 200, (screen.get_height() / 2) + 130))
+        screen.blit(font_min.render("C R E A T E D  B Y :  Y O U S E F  I B R A H I M K H I L  &  A J  R A H I M", True, (48, 98, 48, 255)), ((screen.get_width() / 2) - 175, ((screen.get_height() / 2) + 80)))
         pygame.display.flip()
         dt = clock.tick(60) / 1000
 
