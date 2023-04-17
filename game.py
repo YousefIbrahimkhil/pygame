@@ -58,6 +58,9 @@ sound_win = pygame.mixer.Sound('winner.ogg')
 # USER EVENT
 pygame.time.set_timer(pygame.USEREVENT, 1)
 
+
+
+
 def rectangle(start_x, start_y, size):
     x = start_x-(size/2)
     y = start_y-(size/2)
