@@ -38,10 +38,6 @@ with Image.open("level-0.png") as im:
     pixels = list(im.getdata())
 
 
-def camera_movement(x, CameraX, y, CameraY):
-    screen.blit(pixels,(0 -CameraX,0 -CameraY))
-    screen.blit(player_pos,(x -CameraX,y -CameraY))
-    return pygame.display.flip()
 
     
 for x in pixels:
