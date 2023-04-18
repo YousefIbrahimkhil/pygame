@@ -27,7 +27,7 @@ width = 0
 height = 0
 win = False
 current_level = 0
-max_level = 2
+max_level = 5
 finished = False
 
 # FONTS
@@ -47,13 +47,14 @@ menuTexture = pygame.transform.scale(menuTexture, (400, 200))
 
 # MUSIC
 mixer.init()
-mixer.music.set_volume(0.7)
+mixer.music.set_volume(0.5)
 mixer.music.load("menu.mp3")
-mixer.music.play()
+mixer.music.play(0)
 
 # SOUND EFFECTS
 sound_effect = pygame.mixer.Sound('pop.ogg')
 sound_win = pygame.mixer.Sound('winner.ogg')
+sound_complete = pygame.mixer.Sound('complete.mp3')
 
 # USER EVENT
 pygame.time.set_timer(pygame.USEREVENT, 1)
@@ -130,6 +131,9 @@ def reset_game():
     mixer.music.stop()
     mixer.music.load("music-0.mp3")
     mixer.music.play()
+    mixer.music.queue("music-1.mp3")
+    mixer.music.queue("music-2.mp3")
+    mixer.music.queue("music-3.mp3")
 
     counter = 0
     text = "00:00:00"
@@ -212,12 +216,11 @@ while running:
                     win = True
                     paused = True
                     if(current_level != max_level):
+                        sound_complete.play()
                         current_level += 1
-                        print("Loading: " + str(current_level))
                         load_level(current_level)
                     else:
                         finished = True
-                        print("You Won")
                 
         player = pygame.draw.rect(surface, (49, 86, 57, 0), player_pos)
 
