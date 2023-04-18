@@ -22,11 +22,11 @@ Square moves on his own you will need to avoid the obstacles by controlling his 
 
 ## Credits
 
-####Created By
+#### Created By
 - Yousef Ibrahimkhil
 - AJ Rahim
 
-####Music & Audio
+#### Music & Audio
 - A New Hope of Star Boys : Muciojad - https://opengameart.org/content/a-new-hope-of-star-bros
 - Cupcake's Vinegar-Sour Mood : Spring Spring - https://opengameart.org/content/cupcakes-vinegar-sour-mood
 - Night Runner (Chiptune Edit) : KLY - https://opengameart.org/content/night-runner-chiptune-edit
@@ -34,6 +34,11 @@ Square moves on his own you will need to avoid the obstacles by controlling his 
 - Moon Chime : Obscure Music - https://opengameart.org/content/moon-chime
 
 
-####Sound Effects
+#### Sound Effects
 - Completion Sound : Brandon Morris - https://opengameart.org/content/completion-sound
 - 3 Pop Sounds : wubitog - https://opengameart.org/content/3-pop-sounds
+
+
+This game is under the
+**Apache 2.0 License**
+https://opensource.org/license/apache-2-0/
