@@ -27,7 +27,7 @@ width = 0
 height = 0
 win = False
 current_level = 0
-max_level = 5
+max_level = 9
 finished = False
 
 # FONTS
